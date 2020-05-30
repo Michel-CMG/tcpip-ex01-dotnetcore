@@ -11,9 +11,9 @@ namespace tcpip_ex01_dotnetcore
             var endpoint = new System.Net.IPEndPoint(ip, 53562);
 
             Console.WriteLine("\n\n\n");
-            Console.WriteLine("Select run the server or run the client");
-            Console.WriteLine("0: Run the server");
-            Console.WriteLine("Any other: Run the client");
+            Console.WriteLine("Select run server or run client");
+            Console.WriteLine("            0: Run the server");
+            Console.WriteLine("    Any other: Run the client");
             Console.WriteLine();
 
             string command = Console.ReadLine();
