@@ -31,9 +31,6 @@ namespace tcpip_ex01_dotnetcore
         private static void StartServer(System.Net.IPEndPoint endpoint)
         {
             var server = new Server(endpoint);
-            Console.WriteLine($"The server running status: {server.IsStart()}");
-            // Wait 2 seconds because server is do nothing now
-            System.Threading.Thread.Sleep(2000);
             server.Stop();
         }
 
