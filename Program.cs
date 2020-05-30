@@ -10,6 +10,10 @@ namespace tcpip_ex01_dotnetcore
             var world = new Message(20, "World with class Message");
 
             Console.WriteLine($"{hello.content} {world.content}!");
+
+            Console.Write(hello);
+            Console.Write(world);
+            Console.WriteLine();
         }
     }
 }

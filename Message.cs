@@ -1,5 +1,6 @@
 namespace tcpip_ex01_dotnetcore
 {
+    [System.Serializable]
     class Message
     {
         public int id { get; set; }
@@ -9,6 +10,11 @@ namespace tcpip_ex01_dotnetcore
         {
             this.id = id;
             this.content = content;
+        }
+
+        public override string ToString()
+        {
+            return $"{{ id = {this.id}, content = '{this.content}' }}";
         }
     }
 }
