@@ -32,6 +32,7 @@ namespace tcpip_ex01_dotnetcore
                 var errorMessage = new Message(99, $"Server can not listen local:'{this.endpoint.Port}'.");
                 return;
             }
+            
             Console.WriteLine();
             Console.WriteLine("------------------------------------------");
             Console.WriteLine($"Server started at '{System.DateTime.Now}'");

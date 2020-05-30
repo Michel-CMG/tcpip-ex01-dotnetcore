@@ -10,11 +10,9 @@ namespace tcpip_ex01_dotnetcore
             var ip = System.Net.IPAddress.Loopback;
             var endpoint = new System.Net.IPEndPoint(ip, 53562);
 
-            Console.WriteLine("\n\n\n");
             Console.WriteLine("Select run server or run client");
             Console.WriteLine("            0: Run the server");
-            Console.WriteLine("    Any other: Run the client");
-            Console.WriteLine();
+            Console.WriteLine("    Any other: Run the client\n");
 
             string command = Console.ReadLine();
             switch(command)
