@@ -76,7 +76,8 @@ namespace tcpip_ex01_dotnetcore
                 Console.WriteLine($"Server says: send {responseMsg}");
             }
 
-            if (requestMsg.id == 00 && responseMsg.id == 00)
+            // 02-Ex-Stop if the id is 0, starts to stop
+            if (requestMsg.id == 0 && responseMsg.id == 0)
             {
                 this.Stop();
                 return;
@@ -86,9 +87,10 @@ namespace tcpip_ex01_dotnetcore
         private Message ProcessMsg(Message requestMsg)
         {
             Message responseMsg = null;
-            if (requestMsg.id == 00)
+            if (requestMsg.id == 0)
             {
                 // The request is to stop the server
+                // Set the id to 0
                 responseMsg = new Message
                 {
                     id = 0,

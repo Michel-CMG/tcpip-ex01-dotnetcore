@@ -39,7 +39,7 @@ namespace tcpip_ex01_dotnetcore
         {
             var utf8 = System.Text.Encoding.UTF8;
             
-            // 01 Send request message
+            // 02-01 Send request message
             using (var bWriter = new System.IO.BinaryWriter(stream, utf8, true))
             {
                 var bytes = requestMsg.ToBytes();
@@ -48,7 +48,7 @@ namespace tcpip_ex01_dotnetcore
             }
             Console.WriteLine($"Client says: send request {requestMsg}");
 
-            // 02 Get response message
+            // 02-02 Get response message
             using (var bReader = new System.IO.BinaryReader(stream, utf8))
             {
                 var length = bReader.ReadInt32();
