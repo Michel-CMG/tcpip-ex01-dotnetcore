@@ -25,13 +25,13 @@ namespace tcpip_ex01_dotnetcore
             {
                 this.listener.Stop();
                 this.listener.Start();
+                this.isRunning = true;
             } catch (System.Net.Sockets.SocketException)
             {
                 Console.WriteLine($"Server says: Can not listen local:'{this.endpoint.Port}'. Quit.");
                 var errorMessage = new Message(99, $"Server can not listen local:'{this.endpoint.Port}'.");
                 return;
             }
-            this.isRunning = true;
             Console.WriteLine();
             Console.WriteLine("------------------------------------------");
             Console.WriteLine($"Server started at '{System.DateTime.Now}'");
@@ -39,12 +39,8 @@ namespace tcpip_ex01_dotnetcore
             Console.WriteLine();
 
             // 02 (Loop)Receive the request and send response.
-            while(true)
+            while(this.IsRunning())
             {
-                if (!this.IsRunning())
-                {
-                    return;
-                }
                 using (var stream = this.listener.AcceptTcpClient().GetStream())
                 {
                     this.ReadProcessWrite(stream);
