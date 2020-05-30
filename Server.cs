@@ -58,7 +58,9 @@ namespace tcpip_ex01_dotnetcore
             // 02-01 Receive the request
             using (var bReader = new System.IO.BinaryReader(stream, utf8, true))
             {
-                requestMsg = this.Read(bReader);
+                var length = bReader.ReadInt32();
+                var bytes = bReader.ReadBytes(length);
+                requestMsg = Message.BytesToMessage(bytes);
                 Console.WriteLine($"Server says: receive {requestMsg}");
             }
             
@@ -68,7 +70,9 @@ namespace tcpip_ex01_dotnetcore
             // 02-03 Send the response message
             using (var bWriter = new System.IO.BinaryWriter(stream, utf8))
             {
-                this.Write(bWriter, responseMsg);
+                var bytes = responseMsg.ToBytes();
+                bWriter.Write(bytes.Length);
+                bWriter.Write(bytes);
                 Console.WriteLine($"Server says: send {responseMsg}");
             }
 
@@ -77,13 +81,6 @@ namespace tcpip_ex01_dotnetcore
                 this.Stop();
                 return;
             }
-        }
-
-        private Message Read(System.IO.BinaryReader bReader)
-        {
-            var length = bReader.ReadInt32();
-            var bytes = bReader.ReadBytes(length);
-            return Message.BytesToMessage(bytes);
         }
 
         private Message ProcessMsg(Message requestMsg)
@@ -107,13 +104,6 @@ namespace tcpip_ex01_dotnetcore
             }
 
             return responseMsg;
-        }
-
-        private void Write(System.IO.BinaryWriter bWriter, Message responseMsg)
-        {
-            var bytes = responseMsg.ToBytes();
-            bWriter.Write(bytes.Length);
-            bWriter.Write(bytes);
         }
 
         public bool IsRunning()
