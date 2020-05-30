@@ -8,6 +8,11 @@ namespace tcpip_ex01_dotnetcore
         {
             PrintHello();
 
+            // localhost, random high port
+            var ip = System.Net.IPAddress.Loopback;
+            var port = new System.Random().Next(20000, 50000);
+            var endpoint = new System.Net.IPEndPoint(ip, port);
+
             Console.WriteLine("\n\n\n");
             Console.WriteLine("Select run the server or run the client");
             Console.WriteLine("0: Run the server");
@@ -18,10 +23,10 @@ namespace tcpip_ex01_dotnetcore
             switch(command)
             {
                 case "0":
-                    StartServer();
+                    StartServer(endpoint);
                     break;
                 default :
-                    StartClient();
+                    StartClient(endpoint);
                     break;
             }
         }
@@ -37,7 +42,7 @@ namespace tcpip_ex01_dotnetcore
             Console.WriteLine();
         }
 
-        private static void StartServer()
+        private static void StartServer(System.Net.IPEndPoint endpoint)
         {
             var server = new Server();
             Console.WriteLine($"The server running status: {server.IsStart()}");
@@ -46,7 +51,7 @@ namespace tcpip_ex01_dotnetcore
             server.Stop();
         }
 
-        private static void StartClient()
+        private static void StartClient(System.Net.IPEndPoint endpoint)
         {
             var client = new Client();
             client.Send(new Message(10, "あいうえお"));
