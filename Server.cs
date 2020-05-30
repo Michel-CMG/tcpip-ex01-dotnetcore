@@ -145,13 +145,17 @@ namespace tcpip_ex01_dotnetcore
 
         public void Stop()
         {
-            this.listener.Stop();
-            this.isRunning = false;
-            Console.WriteLine();
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine($"Server stopped at '{System.DateTime.Now}'");
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine();
+            // Stop only when server is running.
+            if (this.IsRunning())
+            {
+                this.listener.Stop();
+                this.isRunning = false;
+                Console.WriteLine();
+                Console.WriteLine("------------------------------------------");
+                Console.WriteLine($"Server stopped at '{System.DateTime.Now}'");
+                Console.WriteLine("------------------------------------------");
+                Console.WriteLine();
+            }
         }
     }
 }
