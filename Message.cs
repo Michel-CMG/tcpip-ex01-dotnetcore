@@ -16,7 +16,8 @@ namespace tcpip_ex01_dotnetcore
 
         public override string ToString()
         {
-            return $"{{ id = {this.id}, content = '{this.content}' }}";
+            string idToPrint = this.id.ToString("D2");
+            return $"{{ id:{idToPrint}, content:\"{this.content}\" }}";
         }
     }
 }

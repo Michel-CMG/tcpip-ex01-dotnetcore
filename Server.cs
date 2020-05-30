@@ -62,7 +62,7 @@ namespace tcpip_ex01_dotnetcore
             using (var bReader = new System.IO.BinaryReader(stream, utf8, true))
             {
                 requestMsg = this.Read(bReader);
-                Console.WriteLine($"Server says: received {requestMsg}");
+                Console.WriteLine($"Server says: receive {requestMsg}");
             }
             
             // 02-02 Process the request message
@@ -72,7 +72,7 @@ namespace tcpip_ex01_dotnetcore
             using (var bWriter = new System.IO.BinaryWriter(stream, utf8))
             {
                 this.Write(bWriter, responseMsg);
-                Console.WriteLine($"Server says: sent '{responseMsg}'");
+                Console.WriteLine($"Server says: send {responseMsg}");
             }
 
             if (requestMsg.id == 00 && responseMsg.id == 00)

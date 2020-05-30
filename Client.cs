@@ -46,7 +46,7 @@ namespace tcpip_ex01_dotnetcore
                 bWriter.Write(requestBytes.Length);
                 bWriter.Write(requestBytes);
             }
-            Console.WriteLine($"Client says: send request '{requestMsg}'");
+            Console.WriteLine($"Client says: send request {requestMsg}");
 
             // 02 Get response message
             using (var bReader = new System.IO.BinaryReader(stream, utf8))
@@ -54,7 +54,7 @@ namespace tcpip_ex01_dotnetcore
                 var length = bReader.ReadInt32();
                 var bytes = bReader.ReadBytes(length);
                 var responseMsg = this.BytesToMessage(bytes);
-                Console.WriteLine($"Client says: receive response '{responseMsg}'");
+                Console.WriteLine($"Client says: receive response {responseMsg}");
                 return responseMsg;
             }
         }
