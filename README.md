@@ -1,11 +1,11 @@
-# dotnetcore-tcpip-ex1
-## .net coreのTCPIP練習
+# tcpip-ex01-dotnetcore
+## .net core TCPIP 練習
 
-Exercise for TCPIP communication by .net core.<br>
-Just the simple exersice for localhost communication.
-  - Program "client" send request to "server" and "server" reponses.
-  - Print the process content to console screen.
-  - Request and respone contents are use UTF8 for asia text.
+Exercise for TCPIP communication by using .net core.<br>
+Just a simple exersice for localhost communication.
+  - Program "client" sends request to "server" and "server" reponses.
+  - Print request/response contents to console screen.
+  - Request/respone contents are using UTF8 for asia text.
   - Requests are like:
   
         { id:10, content:"あいうえお" }
