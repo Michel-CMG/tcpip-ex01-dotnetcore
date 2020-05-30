@@ -46,7 +46,7 @@ namespace tcpip_ex01_dotnetcore
 
                 // 02-01 Receive the request
                 using (var stream = this.listener.AcceptTcpClient().GetStream())
-                using (var bReader = new System.IO.BinaryReader(stream, utf8))
+                using (var bReader = new System.IO.BinaryReader(stream, utf8, true))
                 {
                     requestMsg = this.Read(bReader);
                     Console.WriteLine($"Server says: received {requestMsg}");
@@ -57,10 +57,16 @@ namespace tcpip_ex01_dotnetcore
 
                 // 02-03 Send the response message
                 using (var stream = this.listener.AcceptTcpClient().GetStream())
-                using (var bWriter = new System.IO.BinaryWriter(stream, utf8))
+                using (var bWriter = new System.IO.BinaryWriter(stream, utf8, true))
                 {
                     this.Write(bWriter, responseMsg);
                     Console.WriteLine($"Server says: sent '{responseMsg}'");
+                }
+
+                if (requestMsg.id == 00 && responseMsg.id == 00)
+                {
+                    this.Stop();
+                    return;
                 }
             }
 
@@ -75,11 +81,24 @@ namespace tcpip_ex01_dotnetcore
 
         private Message ProcessMsg(Message requestMsg)
         {
-            var responseMsg = new Message
+            Message responseMsg = null;
+            if (requestMsg.id == 00)
             {
-                id = requestMsg.id + 1,
-                content = $"'{requestMsg.content}' processed"
-            };
+                // The request is to stop the server
+                responseMsg = new Message
+                {
+                    id = 0,
+                    content = "server starts to stop"
+                };
+            } else
+            {
+                responseMsg = new Message
+                {
+                    id = requestMsg.id + 1,
+                    content = $"'{requestMsg.content}' processed"
+                };
+            }
+
             return responseMsg;
         }
 
