@@ -16,3 +16,9 @@ Just the simple exersice for localhost communication.
         { id:11, content:"'あいうえお' processed" }
         { id:21, content:"'かきくけこ' processed" }
         { id:00, content:"server starts to stop" } // Response and stop the server
+
+### Screenshots
+  - Server<br>
+  ![Screenshot for server](image/server-screenshot.png)
+  - Client<br>
+  ![Screenshot for client](image/client-screenshot.png)
