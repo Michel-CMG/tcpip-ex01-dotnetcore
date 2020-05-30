@@ -5,10 +5,12 @@ namespace tcpip_ex01_dotnetcore
     class Server
     {
         private bool isStart = false;
+        private System.Net.IPEndPoint endpoint;
 
-        public Server()
+        public Server(System.Net.IPEndPoint endpoint)
         {
             this.isStart = false;
+            this.endpoint = endpoint;
             // Auto start the server.
             this.Start();
         }

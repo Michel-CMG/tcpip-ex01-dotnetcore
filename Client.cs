@@ -4,6 +4,12 @@ namespace tcpip_ex01_dotnetcore
 {
     class Client
     {
+        private System.Net.IPEndPoint endpoint;
+
+        public Client(System.Net.IPEndPoint endpoint)
+        {
+            this.endpoint = endpoint;
+        }
         public Message Send(Message requestMsg)
         {
             // Do nothing but print the request and response Message
