@@ -1,4 +1,5 @@
 using System;
+using System.Net.Sockets;
 
 namespace tcpip_ex01_dotnetcore
 {
@@ -14,9 +15,9 @@ namespace tcpip_ex01_dotnetcore
         {
             using (var client = new System.Net.Sockets.TcpClient())
             {
-                // 01 Connect to server
                 try
                 {
+                    // 01 Connect to server
                     client.Connect(this.endpoint);
                 }
                 catch (Exception)
@@ -26,27 +27,35 @@ namespace tcpip_ex01_dotnetcore
                     return errorMessage;
                 }
 
-                // 02 Send request message
-                var utf8 = System.Text.Encoding.UTF8;
                 using (var stream = client.GetStream())
-                using (var bWriter = new System.IO.BinaryWriter(stream, utf8))
                 {
-                    var requestBytes = this.MessageToBytes(requestMsg);
-                    bWriter.Write(requestBytes.Length);
-                    bWriter.Write(requestBytes);
+                    // 02 Send request and receive response
+                    return this.SendReceive(requestMsg, stream);
                 }
-                Console.WriteLine($"Client says: send request '{requestMsg}'");
+            }
+        }
 
-                // 03 Get response message
-                using (var stream = client.GetStream())
-                using (var bReader = new System.IO.BinaryReader(stream, utf8))
-                {
-                    var length = bReader.ReadInt32();
-                    var bytes = bReader.ReadBytes(length);
-                    var responseMsg = this.BytesToMessage(bytes);
-                    Console.WriteLine($"Client says: receive response '{responseMsg}'");
-                    return responseMsg;
-                }
+        private Message SendReceive(Message requestMsg, NetworkStream stream)
+        {
+            var utf8 = System.Text.Encoding.UTF8;
+            
+            // 01 Send request message
+            using (var bWriter = new System.IO.BinaryWriter(stream, utf8, true))
+            {
+                var requestBytes = this.MessageToBytes(requestMsg);
+                bWriter.Write(requestBytes.Length);
+                bWriter.Write(requestBytes);
+            }
+            Console.WriteLine($"Client says: send request '{requestMsg}'");
+
+            // 02 Get response message
+            using (var bReader = new System.IO.BinaryReader(stream, utf8))
+            {
+                var length = bReader.ReadInt32();
+                var bytes = bReader.ReadBytes(length);
+                var responseMsg = this.BytesToMessage(bytes);
+                Console.WriteLine($"Client says: receive response '{responseMsg}'");
+                return responseMsg;
             }
         }
 
