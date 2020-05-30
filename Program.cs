@@ -6,8 +6,6 @@ namespace tcpip_ex01_dotnetcore
     {
         static void Main(string[] args)
         {
-            PrintHello();
-
             // local
             var ip = System.Net.IPAddress.Loopback;
             var endpoint = new System.Net.IPEndPoint(ip, 53562);
@@ -28,17 +26,6 @@ namespace tcpip_ex01_dotnetcore
                     StartClient(endpoint);
                     break;
             }
-        }
-
-        private static void PrintHello()
-        {
-            var hello = new Message(10, "Hello");
-            var world = new Message(20, "World with class Message");
-
-            Console.WriteLine($"{hello.content} {world.content}!");
-            Console.Write(hello);
-            Console.Write(world);
-            Console.WriteLine();
         }
 
         private static void StartServer(System.Net.IPEndPoint endpoint)
