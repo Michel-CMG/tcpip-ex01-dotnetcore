@@ -42,9 +42,9 @@ namespace tcpip_ex01_dotnetcore
             // 01 Send request message
             using (var bWriter = new System.IO.BinaryWriter(stream, utf8, true))
             {
-                var requestBytes = this.MessageToBytes(requestMsg);
-                bWriter.Write(requestBytes.Length);
-                bWriter.Write(requestBytes);
+                var bytes = requestMsg.ToBytes();
+                bWriter.Write(bytes.Length);
+                bWriter.Write(bytes);
             }
             Console.WriteLine($"Client says: send request {requestMsg}");
 
@@ -53,28 +53,9 @@ namespace tcpip_ex01_dotnetcore
             {
                 var length = bReader.ReadInt32();
                 var bytes = bReader.ReadBytes(length);
-                var responseMsg = this.BytesToMessage(bytes);
+                var responseMsg = Message.BytesToMessage(bytes);
                 Console.WriteLine($"Client says: receive response {responseMsg}");
                 return responseMsg;
-            }
-        }
-
-        private Byte[] MessageToBytes(Message message)
-        {
-            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            using (var stream = new System.IO.MemoryStream())
-            {
-                formatter.Serialize(stream, message);
-                return stream.ToArray();
-            }
-        }
-
-        private Message BytesToMessage(Byte[] bytes)
-        {
-            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            using (var stream = new System.IO.MemoryStream(bytes))
-            {
-                return (Message)formatter.Deserialize(stream);
             }
         }
     }

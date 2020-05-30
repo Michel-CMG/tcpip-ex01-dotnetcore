@@ -83,7 +83,7 @@ namespace tcpip_ex01_dotnetcore
         {
             var length = bReader.ReadInt32();
             var bytes = bReader.ReadBytes(length);
-            return this.BytesToMessage(bytes);
+            return Message.BytesToMessage(bytes);
         }
 
         private Message ProcessMsg(Message requestMsg)
@@ -111,28 +111,9 @@ namespace tcpip_ex01_dotnetcore
 
         private void Write(System.IO.BinaryWriter bWriter, Message responseMsg)
         {
-            var bytes = this.MessageToBytes(responseMsg);
+            var bytes = responseMsg.ToBytes();
             bWriter.Write(bytes.Length);
             bWriter.Write(bytes);
-        }
-
-        private Byte[] MessageToBytes(Message message)
-        {
-            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            using (var stream = new System.IO.MemoryStream())
-            {
-                formatter.Serialize(stream, message);
-                return stream.ToArray();
-            }
-        }
-
-        private Message BytesToMessage(Byte[] bytes)
-        {
-            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            using (var stream = new System.IO.MemoryStream(bytes))
-            {
-                return (Message)formatter.Deserialize(stream);
-            }
         }
 
         public bool IsRunning()
