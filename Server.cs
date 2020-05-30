@@ -1,4 +1,5 @@
 using System;
+using System.Net.Sockets;
 
 namespace tcpip_ex01_dotnetcore
 {
@@ -40,36 +41,45 @@ namespace tcpip_ex01_dotnetcore
             // 02 (Loop)Receive the request and send response.
             while(true)
             {
-                Message requestMsg = null;
-                Message responseMsg = null;
-                var utf8 = System.Text.Encoding.UTF8;
-
-                // 02-01 Receive the request
-                using (var stream = this.listener.AcceptTcpClient().GetStream())
-                using (var bReader = new System.IO.BinaryReader(stream, utf8, true))
+                if (!this.IsStart())
                 {
-                    requestMsg = this.Read(bReader);
-                    Console.WriteLine($"Server says: received {requestMsg}");
-                }
-                
-                // 02-02 Process the request message
-                responseMsg = this.ProcessMsg(requestMsg);
-
-                // 02-03 Send the response message
-                using (var stream = this.listener.AcceptTcpClient().GetStream())
-                using (var bWriter = new System.IO.BinaryWriter(stream, utf8, true))
-                {
-                    this.Write(bWriter, responseMsg);
-                    Console.WriteLine($"Server says: sent '{responseMsg}'");
-                }
-
-                if (requestMsg.id == 00 && responseMsg.id == 00)
-                {
-                    this.Stop();
                     return;
                 }
+                using (var stream = this.listener.AcceptTcpClient().GetStream())
+                {
+                    this.ReadProcessWrite(stream);
+                }
+            }
+        }
+
+        private void ReadProcessWrite(NetworkStream stream)
+        {
+            Message requestMsg = null;
+            Message responseMsg = null;
+            var utf8 = System.Text.Encoding.UTF8;
+
+            // 02-01 Receive the request
+            using (var bReader = new System.IO.BinaryReader(stream, utf8, true))
+            {
+                requestMsg = this.Read(bReader);
+                Console.WriteLine($"Server says: received {requestMsg}");
+            }
+            
+            // 02-02 Process the request message
+            responseMsg = this.ProcessMsg(requestMsg);
+
+            // 02-03 Send the response message
+            using (var bWriter = new System.IO.BinaryWriter(stream, utf8))
+            {
+                this.Write(bWriter, responseMsg);
+                Console.WriteLine($"Server says: sent '{responseMsg}'");
             }
 
+            if (requestMsg.id == 00 && responseMsg.id == 00)
+            {
+                this.Stop();
+                return;
+            }
         }
 
         private Message Read(System.IO.BinaryReader bReader)
