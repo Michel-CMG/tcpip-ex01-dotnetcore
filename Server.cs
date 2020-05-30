@@ -5,13 +5,13 @@ namespace tcpip_ex01_dotnetcore
 {
     class Server
     {
-        private bool isStart = false;
+        private bool isRunning = false;
         private System.Net.IPEndPoint endpoint;
         private System.Net.Sockets.TcpListener listener;
 
         public Server(System.Net.IPEndPoint endpoint)
         {
-            this.isStart = false;
+            this.isRunning = false;
             this.endpoint = endpoint;
             // Auto start the server.
             this.Start();
@@ -31,7 +31,7 @@ namespace tcpip_ex01_dotnetcore
                 var errorMessage = new Message(99, $"Server can not listen local:'{this.endpoint.Port}'.");
                 return;
             }
-            this.isStart = true;
+            this.isRunning = true;
             Console.WriteLine();
             Console.WriteLine("------------------------------------------");
             Console.WriteLine($"Server started at '{System.DateTime.Now}'");
@@ -41,7 +41,7 @@ namespace tcpip_ex01_dotnetcore
             // 02 (Loop)Receive the request and send response.
             while(true)
             {
-                if (!this.IsStart())
+                if (!this.IsRunning())
                 {
                     return;
                 }
@@ -138,15 +138,15 @@ namespace tcpip_ex01_dotnetcore
             }
         }
 
-        public bool IsStart()
+        public bool IsRunning()
         {
-            return this.isStart;
+            return this.isRunning;
         }
 
         public void Stop()
         {
             this.listener.Stop();
-            this.isStart = false;
+            this.isRunning = false;
             Console.WriteLine();
             Console.WriteLine("------------------------------------------");
             Console.WriteLine($"Server stopped at '{System.DateTime.Now}'");
