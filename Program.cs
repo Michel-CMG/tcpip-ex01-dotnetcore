@@ -16,8 +16,12 @@ namespace tcpip_ex01_dotnetcore
             Console.WriteLine();
 
             var server = new Server();
-            // Wait 2 seconds because server is do nothing now
+            var client = new Client();
             Console.WriteLine($"The server running status: {server.IsStart()}");
+
+            client.Send(hello);
+            client.Send(world);
+            // Wait 2 seconds because server is do nothing now
             System.Threading.Thread.Sleep(2000);
             server.Stop();
         }
