@@ -8,10 +8,9 @@ namespace tcpip_ex01_dotnetcore
         {
             PrintHello();
 
-            // localhost, random high port
+            // local
             var ip = System.Net.IPAddress.Loopback;
-            var port = new System.Random().Next(20000, 50000);
-            var endpoint = new System.Net.IPEndPoint(ip, port);
+            var endpoint = new System.Net.IPEndPoint(ip, 53562);
 
             Console.WriteLine("\n\n\n");
             Console.WriteLine("Select run the server or run the client");
