@@ -12,6 +12,8 @@ namespace tcpip_ex01_dotnetcore
             this.content = content;
         }
 
+        public Message() {}
+
         public override string ToString()
         {
             return $"{{ id = {this.id}, content = '{this.content}' }}";
